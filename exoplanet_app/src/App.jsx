@@ -35,7 +35,7 @@ function App() {
   clickPosition={clickPosition} 
   speed={'1'} 
   destination={'GasGiants'} 
-  temperature={'300 '} 
+  temperature={'150 '} 
 />
     </div>
   );
