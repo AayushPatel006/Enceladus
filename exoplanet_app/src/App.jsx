@@ -33,9 +33,9 @@ function App() {
       </Canvas>
       <HUD 
   clickPosition={clickPosition} 
-  speed={'1 parsec '} 
+  speed={'1'} 
   destination={'GasGiants'} 
-  temperature={'300K'} 
+  temperature={'300 '} 
 />
     </div>
   );
