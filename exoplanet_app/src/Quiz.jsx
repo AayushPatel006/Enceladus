@@ -60,10 +60,11 @@ const ExoplanetQuiz = () => {
   };
 
   const restartQuiz = () => {
-    setCurrentQuestion(0);
-    setScore(0);
-    setFinished(false);
-    localStorage.removeItem('exoplanetQuizScore');
+    setCurrentQuestion(0); // Reset to the first question
+    setScore(0); // Reset the score
+    setFinished(false); // Mark the quiz as not finished
+    setSelectedAnswer(null); // Clear any selected answers
+    localStorage.removeItem('exoplanetQuizScore'); // Clear the saved score in localStorage
   };
 
   return (
@@ -97,26 +98,25 @@ const ExoplanetQuiz = () => {
       </div>
     </div>
   );
-}
+};
   
-  const styles = {
-    quizContainer: {
-      fontSize: '1.2rem',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '50vh',
-      overflow: 'hidden', // Disable scrolling for the full container
-    },
-    scrollableContent: {
-      overflowY: 'auto',
-      maxHeight: '50vh',   // Adjust based on your desired scrollable area
-      padding: '5px',
-    },
-    h4container: {
-      paddingTop: '2px',
-      paddingBottom: '2px'
-    }
-  };
-  
+const styles = {
+  quizContainer: {
+    fontSize: '1.2rem',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '50vh',
+    overflow: 'hidden', // Disable scrolling for the full container
+  },
+  scrollableContent: {
+    overflowY: 'auto',
+    maxHeight: '50vh',   // Adjust based on your desired scrollable area
+    padding: '5px',
+  },
+  h4container: {
+    paddingTop: '2px',
+    paddingBottom: '2px'
+  }
+};
 
 export default ExoplanetQuiz;
