@@ -67,34 +67,56 @@ const ExoplanetQuiz = () => {
   };
 
   return (
-    <div className="quiz-container">
-      <h1>Exoplanet Quiz</h1>
-      {finished ? (
-        <div className="result">
-          <h2>Your score: {score} / {questions.length}</h2>
-          <button onClick={restartQuiz}>Restart Quiz</button>
-        </div>
-      ) : (
-        <div>
-          <h2>{questions[currentQuestion].question}</h2>
-          <div className="options">
-            {questions[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswer(option)}
-                className={`option ${selectedAnswer === option ? (option === questions[currentQuestion].answer ? 'correct' : 'incorrect') : ''}`}
-              >
-                {option}
-              </button>
-            ))}
+    <div style={styles.quizContainer}>
+      <h2>Exoplanet Quiz:</h2>
+      <div style={styles.scrollableContent}>
+        {finished ? (
+          <div className="result">
+            <h2>Your score: {score} / {questions.length}</h2>
+            <button onClick={restartQuiz}>Restart Quiz</button>
           </div>
-          {selectedAnswer && (
-            <button onClick={nextQuestion}>Next</button>
-          )}
-        </div>
-      )}
+        ) : (
+          <div>
+            <h4>{questions[currentQuestion].question}</h4>
+            <div className="options" style={styles.h4container}>
+              {questions[currentQuestion].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswer(option)}
+                  className={`option ${selectedAnswer === option ? (option === questions[currentQuestion].answer ? 'correct' : 'incorrect') : ''}`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            {selectedAnswer && (
+              <button onClick={nextQuestion} >Next</button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
+  
+  const styles = {
+    quizContainer: {
+      fontSize: '1.2rem',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '50vh',
+      overflow: 'hidden', // Disable scrolling for the full container
+    },
+    scrollableContent: {
+      overflowY: 'auto',
+      maxHeight: '50vh',   // Adjust based on your desired scrollable area
+      padding: '5px',
+    },
+    h4container: {
+      paddingTop: '2px',
+      paddingBottom: '2px'
+    }
+  };
+  
 
 export default ExoplanetQuiz;

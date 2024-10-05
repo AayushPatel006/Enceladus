@@ -8,9 +8,9 @@ import ExoplanetQuiz from './Quiz.jsx'; // Ensure the path is correct
 const typingAudio = new Audio(clickSound);
 const clickAudio = new Audio(clickSound);
 
-const FuturisticScreen = ({ onPlanetSelect }) => {
+const FuturisticScreen = ({ onPlanetSelect, setTransitionState }) => {
     const [typedText, setTypedText] = useState('');
-    const fullText = 'What planet do you want to visit?';
+    const fullText = 'Select Planet to visit:';
     const [currentIndex, setCurrentIndex] = useState(0);
     const planetTypes = ['Gas Giants', 'Super Earths', 'Terrestrial', 'Neptune-like'];
     const [isInteracted, setIsInteracted] = useState(false);
@@ -33,6 +33,8 @@ const FuturisticScreen = ({ onPlanetSelect }) => {
     const handleClick = (planet) => {
         clickAudio.currentTime = 0;
         clickAudio.play().catch((error) => console.error('Audio playback error:', error));
+        console.log(1);
+        setTransitionState(true);
         onPlanetSelect(planet);
     };
 
@@ -54,7 +56,7 @@ const FuturisticScreen = ({ onPlanetSelect }) => {
     };
 
     return (
-        <Html position={[0.3816313628563971, -0.00506837456088085, 2.8876587670825806]} transformScale={0.5}>
+        <Html position={[1.2, 1, 2.8876587670825806]} transformScale={0.1}>
             <div style={styles.screenContainer}>
                 <h1 style={styles.typewriterText}>{typedText}</h1>
                 <div style={styles.buttonContainer}>
@@ -90,7 +92,7 @@ const styles = {
         border: '2px solid #00FFFF',
         boxShadow: '0px 0px 15px 5px #00FFFF',
         color: 'white',
-        width: '400px',
+        width: '300px',
     },
     typewriterText: {
         fontFamily: 'Orbitron, sans-serif',
