@@ -16,7 +16,7 @@ const HUD = ({ clickPosition, speed, destination, temperature }) => {
       <div className="hud-info">
         <p><strong>Speed:</strong> {speed} parsec/h</p>
         <p><strong>Destination:</strong> {destination}</p>
-        <p><strong>Temperature:</strong> {temperature}K</p>
+        <p><strong>Temperature:</strong> {temperature} K</p>
       </div>
     </div>
   );
