@@ -69,8 +69,10 @@ const FuturisticScreen = ({ onPlanetSelect, setTransitionState }) => {
                             {planetType}
                         </button>
                     ))}
+                    
                     <button onClick={toggleQuiz} style={styles.quizButton}>
-                        Start Quiz
+                      {quizOpen && "Quiz ʌ"}
+                      {!quizOpen && "Quiz v"}
                     </button>
                 </div>
                 {quizOpen && <ExoplanetQuiz onClose={toggleQuiz} />}
