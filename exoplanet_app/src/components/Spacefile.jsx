@@ -6,12 +6,12 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import * as THREE from 'three';
 import FuturisticScreen from './FuturisticScreen'; // Ensure correct path
 
-const SpaceScene = () => {
+const SpaceScene = ({clickPosition, setClickPosition, setTransitionState}) => {
   const spaceshipRef = useRef();
   const videoSphereRef = useRef();
   const videoRef = useRef(); // Video reference
   const { camera, gl, scene } = useThree();
-  const [clickPosition, setClickPosition] = useState(null);
+  // const [clickPosition, setClickPosition] = useState(null);
   const [videoSpeed, setVideoSpeed] = useState(1); // Control video speed
 
   // Load Draco compressed model (spaceship)
@@ -92,7 +92,7 @@ const SpaceScene = () => {
       <group ref={spaceshipRef} position={[0, 0, 0]} />
       <group ref={videoSphereRef} />
       <ClickMarker />
-      <FuturisticScreen /> {/* Add the futuristic screen here */}
+      <FuturisticScreen setClickPosition={setClickPosition} setTransitionState={setTransitionState}/> {/* Add the futuristic screen here */}
 
       {/* Orbit Controls for the camera */}
       <OrbitControls
