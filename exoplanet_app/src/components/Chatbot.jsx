@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import Fuse from 'fuse.js'; // Import the fuzzy matching library
 import './Chatbot.css'; // Import your CSS for styling
 
+
 const predefinedAnswers = {
-  "hi": "Hello! How can I assist you today?",
-  "hello": "Hi there! What would you like to know about exoplanets?",
-  "hey": "Hey! Feel free to ask me anything about exoplanets.",
   "what is an exoplanet": "An exoplanet is a planet that orbits a star outside our solar system.",
   "how do exoplanets form": "Exoplanets form from the dust and gas surrounding a new star, gradually coalescing into larger bodies.",
   "what are the types of exoplanets": "Exoplanets can be classified into several types, including gas giants, rocky planets, and super-Earths.",
@@ -26,17 +24,33 @@ const Chatbot = () => {
     threshold: 0.3, // Adjust threshold for sensitivity
   });
 
-  const handleSend = () => {
+  const handleSend = async () => { // Change to async function
     if (input.trim()) {
       const normalizedInput = input.toLowerCase().replace(/[.,!?]/g, '').trim();
       setMessages((prevMessages) => [...prevMessages, { text: input, sender: 'user' }]);
 
-      // Fuzzy search for the best match
-      const results = fuse.search(normalizedInput);
-      const bestMatch = results.length > 0 ? results[0].item : null;
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY; // Use the correct prefix
 
-      const response = bestMatch ? predefinedAnswers[bestMatch] : "Sorry, I don't have an answer for that.";
-      setMessages((prevMessages) => [...prevMessages, { text: response, sender: 'gemini' }]);
+      console.log("API Key:", apiKey);
+
+      // Send input to Gemini API
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "contents":[{"parts":[{"text":normalizedInput}]}] }), // Send user input
+        });
+        const data = await response.json();
+        console.log("Gemini Response", data.candidates[0].content.parts[0].text)
+        const geminiResponse = data.candidates[0].content.parts[0].text || "Sorry, I don't have an answer for that."; // Adjust based on API response structure
+
+        setMessages((prevMessages) => [...prevMessages, { text: geminiResponse, sender: 'gemini' }]);
+      } catch (error) {
+        console.error('Error fetching from Gemini API:', error);
+        setMessages((prevMessages) => [...prevMessages, { text: "Sorry, there was an error contacting the service.", sender: 'gemini' }]);
+      }
       
       setInput(''); // Clear the input field
     }
