@@ -4,6 +4,8 @@ import { OrbitControls, useTexture, Html } from "@react-three/drei";
 import "./PlanetPage.css";
 import * as THREE from "three";
 import Chatbot from "../components/Chatbot";
+import VideoComponent from "../components/VideoComponent";
+import ExoplanetQuiz from "../components/Quiz";
 
 // Simple modal component
 function Modal({ isCentered, onExplore }) {
@@ -11,6 +13,25 @@ function Modal({ isCentered, onExplore }) {
     <div className="modal">
       <h3>{isCentered ? "Visit System" : "Visit Planet"}</h3>
       <button onClick={onExplore}>{isCentered ? "Go Back" : "Explore"}</button> {/* Trigger explore mode */}
+    </div>
+  );
+}
+
+function InfoModal() {
+  return (
+    <div className="info-modal">
+      <h3 style={{textAlign:"center"}}>Planet Information</h3>
+      <p><strong>Type:</strong> Neptune-like</p>
+      <p><strong>Star:</strong> Wasp-107 (K-Type)</p>
+      <p><strong>Distance from Earth:</strong> 200 light years</p>
+      <p><strong>Constellation:</strong> Virgo</p>
+      <p><strong>Mass:</strong> 30.5 Earth Mass</p>
+      <p><strong>Orbital Period:</strong> 5.7 days</p>
+      <p><strong>Discovery Method:</strong> Transit</p>
+      <p><strong>Description:</strong> Extended Helium Atmosphere</p>
+      <img src="/graph.png" alt="Neptune" style={{width: "100%"}} />
+      <p>Jessica Spake et al. Wie Field Camera 3 instrument on hubble Transit depth v Wavelength 98Angstrom wide bin centered on helium triplet at 1083Angstroms</p>
+      <a href="https://ccnmtl.github.io/astro-simulations/exoplanet-transit-simulator/" target="_blank" rel="noreferrer">Learn more about Transit Simulation</a>
     </div>
   );
 }
@@ -43,7 +64,7 @@ function Planet({ size, texture, color, distanceFromStar, onClick, isCentered })
       {/* Tooltip for the planet */}
       {!isCentered && (
         <Html position={[0, 1.5, 0]} center>
-          <div className="tooltip">Planet</div>
+          <div className="tooltip"><p>Wasp-107B</p></div>
         </Html>
       )}
     </mesh>
@@ -64,7 +85,7 @@ function Star({ size, texture }) {
           emissiveMap={sunTexture}
         />
         <Html position={[0, 1.5, 0]} center>
-          <div className="tooltip">Sun</div>
+          <div className="tooltip"><p>Wasp-107</p></div>
         </Html>
       </mesh>
       <pointLight intensity={50} distance={100} decay={2} color={0xfffaf0} />
@@ -155,6 +176,14 @@ export default function PlanetPage() {
       </Canvas>
 
       <Modal onExplore={handleExplore} isCentered={isCentered}/>
+
+      {isCentered && <InfoModal />}
+
+      {isCentered && <VideoComponent videoSrc={"/wasp.mp4"} />}
+
+      {isCentered && <div className="quiz-modal">
+        <ExoplanetQuiz />  
+      </div>}
 
       <Chatbot />
     </div>

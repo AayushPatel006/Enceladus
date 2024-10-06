@@ -7,6 +7,7 @@ import HUD from '../components/Hud.jsx'; // Import HUD
 import TransitionVideoBackground from '../components/TransitionVideo.jsx';
 // Import the Chatbot component
 import Chatbot from '../components/Chatbot.jsx'; // Import your Chatbot component
+import VideoComponent from '../components/VideoComponent.jsx';
 
 function App() {
   const [clickPosition, setClickPosition] = React.useState(null);
@@ -40,6 +41,8 @@ function App() {
         destination={'GasGiants'} 
         temperature={'150 '} 
       />
+
+      <VideoComponent videoSrc={'/home.mp4'} />
       {/* Add the Chatbot component here */}
       <Chatbot /> {/* Ensure the Chatbot is rendered here */}
     </div>

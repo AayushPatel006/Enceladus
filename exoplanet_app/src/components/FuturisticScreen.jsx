@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Html } from '@react-three/drei'; // For placing HTML elements in the 3D space
 import clickSound from '/sound.mp3';
 import './HUD.css'; // Ensure you have the same CSS file for consistent styling
-import ExoplanetQuiz from './Quiz.jsx'; // Ensure the path is correct
 
 // Preload audio file
 const typingAudio = new Audio(clickSound);
@@ -69,7 +68,7 @@ const FuturisticScreen = ({ onPlanetSelect, setTransitionState }) => {
         if (!isFloatingWindowOpen || !selectedExoplanet) return null; 
 
         const exoplanetToTravel = {
-            'Gas Giants': "Kepler-138d", 
+            'Gas Giants': "Wasp-107B", 
             'Super Earths': "Proxima Centauri b", 
             'Terrestrial': "TOI-849b", 
             'Neptune-like': "Phoenix"
@@ -127,13 +126,7 @@ const FuturisticScreen = ({ onPlanetSelect, setTransitionState }) => {
                             {planetType}
                         </button>
                     ))}
-                    
-                    <button onClick={toggleQuiz} style={styles.quizButton}>
-                      {quizOpen && "Quiz ʌ"}
-                      {!quizOpen && "Quiz v"}
-                    </button>
                 </div>
-                {quizOpen && <ExoplanetQuiz onClose={toggleQuiz} />}
                 <FloatingWindow id="floating-window" /> {/* Render the floating window */}
             </div>
         </Html>
@@ -194,7 +187,7 @@ const styles = {
         top: '18%', // Adjusted position to be higher
         left: '20%', // Adjusted position to be on the right side
         transform: 'translate(-140%, 0)', // Center horizontally
-        // backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(0, 0, 50, 0.5)',
         border: '2px solid #00FFFF',
         borderRadius: '10px',
         padding: '20px',

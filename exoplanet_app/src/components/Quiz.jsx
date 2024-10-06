@@ -3,30 +3,10 @@ import './ExoplanetQuiz.css'; // Create this CSS file for styling
 
 const questions = [
   {
-    question: "What exoplanet has a year that is 20 Earth days long?",
-    options: ["KELT-6 b", "Tau Ceti", "Beta Pictoris b", "KELT-20 b"],
-    answer: "Tau Ceti"
+    question: "(Infrared) Helium - 10830 Angstrom, Sodium - 5889 Angstroms , Potassium - 7665 Angstroms, Indium  - 9400 Angstroms Which element do you think is detected on Wasp-107b?",
+    options: ["Helium", "Sodium", "Potassium", "Indium"],
+    answer: "Helium"
   },
-  {
-    question: "What rocky world has a year that is 18.8 Earth days long?",
-    options: ["TRAPPIST-1 h", "KELT-19 A b", "HD 40307 c", "Proxima Centauri b"],
-    answer: "TRAPPIST-1 h"
-  },
-  {
-    question: "What gas giant was discovered in 2006?",
-    options: ["KELT-6 c", "HD 10647 b", "Beta Pictoris b", "KELT-20 b"],
-    answer: "HD 10647 b"
-  },
-  {
-    question: "What exoplanet is 0.3 away from its star?",
-    options: ["Kepler-1229 b", "Tau Ceti g", "TRAPPIST-1 e", "KELT-6 b"],
-    answer: "Kepler-1229 b"
-  },
-  {
-    question: "What super Earth is in a five planet system?",
-    options: ["Kepler-62 f", "Tau Ceti f", "KELT-20 b", "Proxima Centauri b"],
-    answer: "Kepler-62 f"
-  }
 ];
 
 const ExoplanetQuiz = () => {
@@ -69,7 +49,6 @@ const ExoplanetQuiz = () => {
 
   return (
     <div style={styles.quizContainer}>
-      <h2>Exoplanet Quiz:</h2>
       <div style={styles.scrollableContent}>
         {finished ? (
           <div className="result">

@@ -6,6 +6,8 @@
     font-family: 'Orbitron', sans-serif; /* Futuristic font */
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Glowing effect */
     z-index: 100; /* Make sure it appears above other elements */
+    width: 100px;
+    text-align: center;
 }
 
 .modal {
@@ -25,6 +27,25 @@
     z-index: 100;
 }
 
+.info-modal {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 300px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    color: #00FFFF; /* Neon-like text color */
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Glowing effect */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    z-index: 100;
+    max-height: 40vh;
+    overflow-y: scroll;
+}
+
 .modal button {
     margin-top: 10px;
     padding: 5px 10px;
@@ -35,4 +56,19 @@
     cursor: pointer;
     font-family: 'Orbitron', sans-serif; /* Futuristic font */
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Glowing effect */
+}
+
+.quiz-modal {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 400px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    color: #00FFFF; /* Neon-like text color */
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Glowing effect */
+    max-height: 40vh;
+    overflow-y: scroll;
 }
