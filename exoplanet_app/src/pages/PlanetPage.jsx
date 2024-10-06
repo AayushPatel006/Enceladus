@@ -7,6 +7,14 @@ import Chatbot from "../components/Chatbot";
 import VideoComponent from "../components/VideoComponent";
 import ExoplanetQuiz from "../components/Quiz";
 
+const questions = [
+  {
+    question: "(Infrared) Helium - 10830 Angstrom, Sodium - 5889 Angstroms , Potassium - 7665 Angstroms, Indium  - 9400 Angstroms Which element do you think is detected on Wasp-107b?",
+    options: ["Helium", "Sodium", "Potassium", "Indium"],
+    answer: "Helium"
+  },
+];
+
 // Simple modal component
 function Modal({ isCentered, onExplore }) {
   return (
@@ -31,7 +39,7 @@ function InfoModal() {
       <p><strong>Description:</strong> Extended Helium Atmosphere</p>
       <img src="/graph.png" alt="Neptune" style={{width: "100%"}} />
       <p>Jessica Spake et al. Wie Field Camera 3 instrument on hubble Transit depth v Wavelength 98Angstrom wide bin centered on helium triplet at 1083Angstroms</p>
-      <a href="https://ccnmtl.github.io/astro-simulations/exoplanet-transit-simulator/" target="_blank" rel="noreferrer">Learn more about Transit Simulation</a>
+      <a href="https://hoiast.github.io/ExoSim/" target="_blank" rel="noreferrer">Learn more about Transit Simulation</a>
     </div>
   );
 }
@@ -182,7 +190,7 @@ export default function PlanetPage() {
       {isCentered && <VideoComponent videoSrc={"/wasp.mp4"} />}
 
       {isCentered && <div className="quiz-modal">
-        <ExoplanetQuiz />  
+        <ExoplanetQuiz questions={questions}/>  
       </div>}
 
       <Chatbot />

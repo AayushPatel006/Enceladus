@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ExoplanetQuiz.css'; // Create this CSS file for styling
 
-const questions = [
-  {
-    question: "(Infrared) Helium - 10830 Angstrom, Sodium - 5889 Angstroms , Potassium - 7665 Angstroms, Indium  - 9400 Angstroms Which element do you think is detected on Wasp-107b?",
-    options: ["Helium", "Sodium", "Potassium", "Indium"],
-    answer: "Helium"
-  },
-];
-
-const ExoplanetQuiz = () => {
+const ExoplanetQuiz = ({questions}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
