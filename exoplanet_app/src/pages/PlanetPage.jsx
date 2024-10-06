@@ -25,15 +25,22 @@ function Planet({ size, texture, color, distanceFromStar }) {
 }
 
 // Star component that emits light
-function Star({ size, color }) {
+// Star component that emits light
+function Star({ size, texture }) {
+  const sunTexture = useTexture(texture);
   return (
-    <mesh scale={[size, size, size]}>
-      <sphereGeometry args={[1, 32, 32]} />
-      {/* Material for star (emissive to make it glow) */}
-      <meshStandardMaterial emissive={color} emissiveIntensity={1.5} color={color} />
-      {/* Light emitted from the star */}
-      <pointLight intensity={3} distance={100} decay={2} />
-    </mesh>
+    <group>
+      <mesh scale={[size, size, size]}>
+        <sphereGeometry args={[1, 32, 32]}/>
+        <meshStandardMaterial
+          map={sunTexture}
+          emissive={new THREE.Color(0xffff00)}
+          emissiveIntensity={1}
+          emissiveMap={sunTexture}
+        />
+      </mesh>
+      <pointLight intensity={50} distance={100} decay={2} color={0xfffaf0} />
+    </group>
   );
 }
 
@@ -55,9 +62,8 @@ function OrbitPath({ radius }) {
   );
 }
 
-// Component for rendering random background stars
 function StarsBackground({ count = 500 }) {
-  const starPositions = new Float32Array(count * 3); // 3 coordinates per star (x, y, z)
+  const starPositions = new Float32Array(count * 3);
   
   // Generate random positions for each star
   for (let i = 0; i < count; i++) {
@@ -83,9 +89,10 @@ function StarsBackground({ count = 500 }) {
 export default function PlanetPage() {
   // Example properties for the star and planet
   const starSize = 1.5;
-  const starColor = "yellow";
+  const starColor = "0xFFFF00";
   const planetSize = 0.5;
   const planetTexture = "/texture.png"; // Replace with your texture path
+  const sunTexture = "/sun.jpg";
   const planetColor = "blue";
   const planetDistanceFromStar = 5;
 
@@ -95,13 +102,15 @@ export default function PlanetPage() {
         <OrbitControls />
         
         {/* Ambient light for some background lighting */}
-        <ambientLight intensity={0.1} />
+        <ambientLight intensity={0.3}/>
 
         {/* Background stars */}
         <StarsBackground count={1000} /> {/* Increase count for more stars */}
         
         {/* Star as the center and light source */}
-        <Star size={starSize} color={starColor} />
+        <Star size={starSize} texture={sunTexture}/>
+
+        <pointLight intensity={50} distance={300} decay={2}/>
 
         {/* Orbit Path around the star */}
         <OrbitPath radius={planetDistanceFromStar} />
