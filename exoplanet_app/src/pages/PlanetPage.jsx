@@ -1,43 +1,71 @@
-import React, { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useTexture } from "@react-three/drei";
-import * as THREE from 'three';
+import React, { useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls, useTexture, Html } from "@react-three/drei";
+import "./PlanetPage.css";
+import * as THREE from "three";
+import Chatbot from "../components/Chatbot";
+
+// Simple modal component
+function Modal({ isCentered, onExplore }) {
+  return (
+    <div className="modal">
+      <h3>{isCentered ? "Visit System" : "Visit Planet"}</h3>
+      <button onClick={onExplore}>{isCentered ? "Go Back" : "Explore"}</button> {/* Trigger explore mode */}
+    </div>
+  );
+}
 
 // Planet component that takes size, texture, and color as props
-function Planet({ size, texture, color, distanceFromStar }) {
+function Planet({ size, texture, color, distanceFromStar, onClick, isCentered }) {
   const planetTexture = useTexture(texture);
   const planetRef = useRef();
-  
-  // Rotate the planet around the star (orbit)
+
+  // Rotate the planet around the star (orbit) if not in centered mode
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    // Calculate the planet's position based on time
-    planetRef.current.position.x = distanceFromStar * Math.sin(t); // Horizontal movement
-    planetRef.current.position.z = distanceFromStar * Math.cos(t); // Circular movement
+    if (!isCentered) {
+      const t = clock.getElapsedTime();
+      planetRef.current.position.x = distanceFromStar * Math.sin(t);
+      planetRef.current.position.z = distanceFromStar * Math.cos(t);
+    }
   });
 
+  const arg_size = isCentered ? 7 : 1;
+
   return (
-    <mesh ref={planetRef} scale={[size, size, size]} position={[distanceFromStar, 0, 0]}>
-      <sphereGeometry args={[1, 32, 32]} />
+    <mesh
+      ref={planetRef}
+      scale={[size, size, size]}
+      position={isCentered ? [0, 0, 0] : [distanceFromStar, 0, 0]} // Center if explore is clicked
+      onClick={onClick}
+    >
+      <sphereGeometry args={[arg_size, 32, 32]} />
       <meshStandardMaterial map={planetTexture} color={color} />
+      {/* Tooltip for the planet */}
+      {!isCentered && (
+        <Html position={[0, 1.5, 0]} center>
+          <div className="tooltip">Planet</div>
+        </Html>
+      )}
     </mesh>
   );
 }
 
-// Star component that emits light
 // Star component that emits light
 function Star({ size, texture }) {
   const sunTexture = useTexture(texture);
   return (
     <group>
       <mesh scale={[size, size, size]}>
-        <sphereGeometry args={[1, 32, 32]}/>
+        <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
           map={sunTexture}
           emissive={new THREE.Color(0xffff00)}
           emissiveIntensity={1}
           emissiveMap={sunTexture}
         />
+        <Html position={[0, 1.5, 0]} center>
+          <div className="tooltip">Sun</div>
+        </Html>
       </mesh>
       <pointLight intensity={50} distance={100} decay={2} color={0xfffaf0} />
     </group>
@@ -52,7 +80,7 @@ function OrbitPath({ radius }) {
     const theta = (i / segments) * Math.PI * 2;
     points.push(new THREE.Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
   }
-  
+
   const orbitLine = new THREE.BufferGeometry().setFromPoints(points);
 
   return (
@@ -62,62 +90,73 @@ function OrbitPath({ radius }) {
   );
 }
 
+// Background stars
 function StarsBackground({ count = 500 }) {
   const starPositions = new Float32Array(count * 3);
-  
+
   // Generate random positions for each star
   for (let i = 0; i < count; i++) {
-    const x = (Math.random() - 0.5) * 100;  // Random value between -50 and 50
+    const x = (Math.random() - 0.5) * 100; // Random value between -50 and 50
     const y = (Math.random() - 0.5) * 100;
     const z = (Math.random() - 0.5) * 100;
-    
+
     starPositions.set([x, y, z], i * 3);
   }
 
   return (
     <points>
-      {/* Star geometry as small points in space */}
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" array={starPositions} count={starPositions.length / 3} itemSize={3} />
       </bufferGeometry>
-      {/* Small white dots for stars */}
       <pointsMaterial size={0.2} color="white" />
     </points>
   );
 }
 
+// Main PlanetPage component
 export default function PlanetPage() {
-  // Example properties for the star and planet
   const starSize = 1.5;
-  const starColor = "0xFFFF00";
   const planetSize = 0.5;
-  const planetTexture = "/texture.png"; // Replace with your texture path
+  const planetTexture = "/neptune.jpg"; // Replace with your texture path
   const sunTexture = "/sun.jpg";
   const planetColor = "blue";
   const planetDistanceFromStar = 5;
 
+  const [isCentered, setIsCentered] = useState(false);
+
+  // Close modal and trigger explore mode
+  const handleExplore = () => {
+    setIsCentered(!isCentered);
+  };
+
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <Canvas camera={{ position: [0, 10, 10], fov: 50 }}>
-        <OrbitControls />
-        
-        {/* Ambient light for some background lighting */}
-        <ambientLight intensity={0.3}/>
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      <Canvas camera={{ position: isCentered ? [0, 0, 3] : [0, 10, 10], fov: 50 }}>
+        <OrbitControls enablePan={!isCentered} enableZoom={!isCentered} />
 
-        {/* Background stars */}
-        <StarsBackground count={1000} /> {/* Increase count for more stars */}
-        
-        {/* Star as the center and light source */}
-        <Star size={starSize} texture={sunTexture}/>
+        {!isCentered ? (<ambientLight intensity={0.3} />) : (<ambientLight intensity={1} />)}
 
-        <pointLight intensity={50} distance={300} decay={2}/>
+        <StarsBackground count={1000} />
 
-        {/* Orbit Path around the star */}
-        <OrbitPath radius={planetDistanceFromStar} />
+        {!isCentered && <Star size={starSize} texture={sunTexture} />}
 
-        {/* Planet revolving around the star */}
-        <Planet size={planetSize} texture={planetTexture} color={planetColor} distanceFromStar={planetDistanceFromStar} />
+        <pointLight intensity={50} distance={300} decay={2} />
+
+        {!isCentered && <OrbitPath radius={planetDistanceFromStar} />}
+
+        {/* Planet, toggle isCentered prop to switch views */}
+        <Planet
+          size={planetSize}
+          texture={planetTexture}
+          color={planetColor}
+          distanceFromStar={planetDistanceFromStar}
+          isCentered={isCentered}
+        />
       </Canvas>
+
+      <Modal onExplore={handleExplore} isCentered={isCentered}/>
+
+      <Chatbot />
     </div>
   );
 }

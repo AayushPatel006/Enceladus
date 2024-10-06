@@ -1,0 +1,38 @@
+.tooltip {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 5px; /* Rounded corners */
+    color: #00FFFF; /* Neon-like text color */
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Glowing effect */
+    z-index: 100; /* Make sure it appears above other elements */
+}
+
+.modal {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 200px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    color: #00FFFF; /* Neon-like text color */
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Glowing effect */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #00FFFF; /* Neon-like button color */
+    color: #000000; /* Black text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Glowing effect */
+}
