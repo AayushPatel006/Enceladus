@@ -1,4 +1,6 @@
-# New way to explore Exoplanets 🪐
+# Enceladus - New way to explore Exoplanets 🪐
+
+[Live Demo 🚀](https://enceladus-project-spit.vercel.app/)
 
 The project provides an engaging educational experience to young students to learn about different exoplanets. It works using a web technology of ThreeJs and simulates a spaceship as well as the star system and planets. 
 
